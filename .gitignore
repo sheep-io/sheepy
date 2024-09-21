@@ -1,1 +1,4 @@
 __pycache__
+sheepy.egg-info
+dist
+build

@@ -25,7 +25,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='sheepy',              
-    version='0.0.1',               
+    version='0.0.3',               
     description='🐑An incredible and performant framework for unit testing🐑',
     long_description=open(file='docs/README.rst', encoding='utf-8').read(),
     long_description_content_type='text/markdown',

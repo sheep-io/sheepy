@@ -1,7 +1,4 @@
-from .sheepy import SheepyTestCase
-from .sheepy.core.test_suite import TestSuite
-from .sheepy.core.test_runner import TestRunner
-from .sheepy.core.logger import TestLogger
+from sheepy.sheeptest import SheepyTestCase
 
 class ExampleTest(SheepyTestCase):
     def test_success(self):
@@ -21,7 +18,3 @@ class ExampleTest(SheepyTestCase):
     def test_expected_failure(self):
         self.assertEqual(1, 2)
 
-
-suite = TestSuite([ExampleTest])
-runner = TestRunner(suite)
-runner.run()
