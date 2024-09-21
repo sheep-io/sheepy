@@ -11,3 +11,7 @@ Sheepy is a lightweight unit testing framework designed for Python developers wh
 * **Test runner**: Executing test cases and collecting results.
 * **Basic reporting**: Generating a simple pass/fail report.
 * **Logging**: Providing a mechanism for logging test execution details.
+
+### v0.0.2 09/21/2024
+
+changing the entire project structure, reorganizing and changing use cases. Improving to increasingly optimize unit tests.
