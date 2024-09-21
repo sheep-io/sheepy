@@ -54,6 +54,17 @@ runner = TestRunner(suite)
 runner.run()
 ```
 
+### Example output
+
+```
+Test Results:
+ExampleTest.test_error: FAIL - Forced error
+ExampleTest.test_expected_failure: EXPECTED FAILURE
+ExampleTest.test_failure: FAIL - 1 != 2
+ExampleTest.test_skipped: SKIPPED -
+ExampleTest.test_success: OK
+```
+
 ### Customization
 
 Sheepy allows for customization in several ways:
