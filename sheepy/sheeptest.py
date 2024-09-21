@@ -1,20 +1,33 @@
+from .core.__tcases import test_cases
+from .utils.formatter import TestOutputFormatter
+from .utils.asserts import AssertMethods
 
-class SheepyTestCase:
+class SheepyTestCase(AssertMethods):
+
+    """Base class for test cases.
+
+    This class provides a framework for writing and running unit tests. It includes methods for setting up and tearing down test environments, running tests, and formatting test results.
+
+    Attributes:
+        _resources: A list of resources that need to be closed after a test is completed.
+    """
     
-    def setUp(self):
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        test_cases.append(cls)
+        instance = cls()
+        results = instance.run_tests()
+        cls._output_results(results)
 
-        
-        self._resources = []  
+    def setUp(self):
+        self._resources = []
 
     def tearDown(self):
-
-        
         for resource in self._resources:
-            resource.close()  
+            resource.close()
         self._resources.clear()
 
-    def run(self):
-       
+    def run_tests(self):
         methods = dir(self)
         test_methods = [method for method in methods if method.startswith("test_")]
         results = []
@@ -35,47 +48,22 @@ class SheepyTestCase:
                     results.append((method_name, f'fail: {str(e)}'))
         return results
 
-
-    
-    def assertEqual(self, first, second, msg=None):
-        
-        if first != second:
-            message = msg or f'{first} != {second}'
-            raise AssertionError(message)
-
-    def assertNotEqual(self, first, second, msg=None):
-        
-        if first == second:
-            message = msg or f'{first} == {second}'
-            raise AssertionError(message)
-
-    def assertTrue(self, expr, msg=None):
-        
-        if not expr:
-            message = msg or 'The expression is not true'
-            raise AssertionError(message)
-
-    def assertFalse(self, expr, msg=None):
-        
-        if expr:
-            message = msg or 'The expression is not false'
-            raise AssertionError(message)
-
-    def assertRaises(self, exception, func, *args, **kwargs):
-        
-        try:
-            func(*args, **kwargs)
-        except exception:
-            return
-        except Exception as e:
-            raise AssertionError(f'Unexpected exception raised: {e}')
-        raise AssertionError(f'{exception.__name__} was not raised')
-
-    
+    @classmethod
+    def _output_results(cls, results):
+        print("\nTest Results:")
+        for test_name, result in results:
+            if result == 'pass':
+                print(TestOutputFormatter.format_success(f"{cls.__name__}.{test_name}"))
+            elif result == 'expected failure':
+                print(TestOutputFormatter.format_expected_failure(f"{cls.__name__}.{test_name}"))
+            elif result.startswith('fail'):
+                error_message = result.split(": ", 1)[1]
+                print(TestOutputFormatter.format_failure(f"{cls.__name__}.{test_name}", error_message))
+            elif result == 'skipped':
+                print(TestOutputFormatter.format_skipped(f"{cls.__name__}.{test_name}", getattr(cls, '_skip_reason', '')))
 
     @staticmethod
     def skip(reason=""):
-        
         def decorator(func):
             func._skip = True
             func._skip_reason = reason
@@ -84,6 +72,5 @@ class SheepyTestCase:
 
     @staticmethod
     def expectedFailure(func):
-        
         func._expected_failure = True
         return func
