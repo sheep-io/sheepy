@@ -5,9 +5,27 @@
 [![PyPI - Version](https://img.shields.io/pypi/v/sheepy?color=blue)](https://pypi.org/project/sheepy/)
 
 
-Sheepy is a lightweight unit testing framework designed for Python developers who value simplicity and ease of use. It provides a core set of components to write unit tests and generate basic test reports.
+Sheepy is a lightweight unit testing library designed for Python developers who value simplicity and ease of use. It provides a core set of components to write unit tests and generate basic test reports.
 
 ![Logo](./img/logo.png)
+
+
+### Assert Methods Overview
+
+```
++-----------------------+-------------------------------------------------------+
+| Assertion Method       | Description                                           |
++-----------------------+-------------------------------------------------------+
+| assertEqual(a, b)      | Checks if two values are equal.                       |
+| assertNotEqual(a, b)   | Checks if two values are not equal.                   |
+| assertTrue(expr)       | Verifies that the expression is True.                 |
+| assertFalse(expr)      | Verifies that the expression is False.                |
+| assertRaises(exc, fn)  | Asserts that a function raises a specific exception.  |
+| assertStatusCode(resp) | Verifies if the response has the expected status code.|
+| assertJsonResponse(resp)| Confirms the response is in JSON format.             |
+| assertResponseContains(resp, key) | Ensures the response contains a given key. |
++-----------------------+-------------------------------------------------------+
+```
 
 ### Features
 
@@ -76,44 +94,44 @@ from sheepy.sheeptest import SheepyTestCase
 
 class TestHttpBinApi(SheepyTestCase):
     def __init__(self):
-        # Passing the base_url of the httpbin.org API to the test class
+        
         super().__init__(base_url="https://httpbin.org")
 
     def test_get_status(self):
-        """Testing the GET /status/200 endpoint"""
+        
         response = self.api.get("/status/200")
-        self.assertStatusCode(response, 200)  # Check if the status code is 200
+        self.assertStatusCode(response, 200)  
 
     def test_get_json(self):
-        """Testing the GET /json endpoint to validate the JSON response"""
+        
         response = self.api.get("/json")
-        self.assertStatusCode(response, 200)  # Check if the status code is 200
-        self.assertJsonResponse(response)  # Check if the response is JSON
-        self.assertResponseContains(response, "slideshow")  # Verify if the key "slideshow" exists in the response
+        self.assertStatusCode(response, 200)  
+        self.assertJsonResponse(response)  
+        self.assertResponseContains(response, "slideshow")  
 
     def test_post_data(self):
-        """Testing the POST /post endpoint by sending data in the body"""
+        
         payload = {"name": "SheepyTest", "framework": "unittest"}
         response = self.api.post("/post", json=payload)
-        self.assertStatusCode(response, 200)  # Check if the status code is 200
-        self.assertJsonResponse(response)  # Check if the response is JSON
-        self.assertResponseContains(response, "json")  # Verify if the response contains the "json" key
-        self.assertEqual(response.json()["json"], payload)  # Ensure the sent data matches the received data
+        self.assertStatusCode(response, 200)  
+        self.assertJsonResponse(response)  
+        self.assertResponseContains(response, "json") 
+        self.assertEqual(response.json()["json"], payload)  
 
     def test_put_data(self):
-        """Testing the PUT /put endpoint by sending data"""
+        
         payload = {"key": "value"}
         response = self.api.put("/put", json=payload)
-        self.assertStatusCode(response, 200)  # Check if the status code is 200
-        self.assertJsonResponse(response)  # Check if the response is JSON
-        self.assertResponseContains(response, "json")  # Verify if the response contains the "json" key
-        self.assertEqual(response.json()["json"], payload)  # Ensure the sent data matches the received data
+        self.assertStatusCode(response, 200)  
+        self.assertJsonResponse(response)  
+        self.assertResponseContains(response, "json")  
+        self.assertEqual(response.json()["json"], payload)  
 
     def test_delete_resource(self):
-        """Testing the DELETE /delete endpoint"""
+        
         response = self.api.delete("/delete")
-        self.assertStatusCode(response, 200)  # Check if the status code is 200
-        self.assertJsonResponse(response)  # Check if the response is JSON
+        self.assertStatusCode(response, 200)  
+        self.assertJsonResponse(response)  
 ```
 
 ### Output example
@@ -131,6 +149,12 @@ TestHttpBinApi.test_put_data: OK
 
 Sheepy allows for customization in several ways:
 
-* **Logging:** 
-* **Reporting:** 
-* **Test discovery:** 
+```
++------------------+------------------------------------------------------------+
+| Feature           | Description                                                |
++------------------+------------------------------------------------------------+
+| Logging           | Customizable logging mechanisms for test results.          |
+| Reporting         | Support for different reporting formats (e.g., JSON, XML). |
+| Test Discovery    | Flexible discovery mechanisms for tests.                   |
++------------------+------------------------------------------------------------+
+```
