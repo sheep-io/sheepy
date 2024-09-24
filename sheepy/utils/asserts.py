@@ -27,3 +27,15 @@ class AssertMethods:
         except Exception as e:
             raise AssertionError(f'Unexpected exception raised: {e}')
         raise AssertionError(f'{exception.__name__} was not raised')
+
+    def assertStatusCode(self, response, expected_code):
+        if response.status_code != expected_code:
+            raise AssertionError(f"Expected {expected_code}, but got {response.status_code}")
+
+    def assertResponseContains(self, response, key):
+        if key not in response.json():
+            raise AssertionError(f"Response does not contain expected key: {key}")
+
+    def assertJsonResponse(self, response):
+        if 'application/json' not in response.headers.get('Content-Type', ''):
+            raise AssertionError("Response is not JSON")
