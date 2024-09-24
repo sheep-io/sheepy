@@ -3,6 +3,7 @@
 ![Python Version](https://img.shields.io/badge/python-v3.8%7C3.9%7C3.10%7C3.11%7C3.12-blue)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/sheepy?color=blue)](https://pypi.org/project/sheepy/)
 [![PyPI - Version](https://img.shields.io/pypi/v/sheepy?color=blue)](https://pypi.org/project/sheepy/)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/y/sheep-io/sheepy/main?color=blue)
 
 
 Sheepy is a lightweight unit testing library designed for Python developers who value simplicity and ease of use. It provides a core set of components to write unit tests and generate basic test reports.
