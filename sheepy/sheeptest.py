@@ -1,6 +1,7 @@
 from .core.__tcases import test_cases
 from .utils.formatter import TestOutputFormatter
 from .utils.asserts import AssertMethods
+from .core.requests import ApiRequests
 
 class SheepyTestCase(AssertMethods):
 
@@ -11,7 +12,13 @@ class SheepyTestCase(AssertMethods):
     Attributes:
         _resources: A list of resources that need to be closed after a test is completed.
     """
-    
+
+    def __init__(self, base_url=None):
+  
+        self._resources = []
+        if base_url:
+            self.api = ApiRequests(base_url)  
+
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
         test_cases.append(cls)
@@ -21,6 +28,9 @@ class SheepyTestCase(AssertMethods):
 
     def setUp(self):
         self._resources = []
+        
+        if hasattr(self, 'api'):
+            self.api = ApiRequests(self.api.base_url)
 
     def tearDown(self):
         for resource in self._resources:
@@ -28,6 +38,7 @@ class SheepyTestCase(AssertMethods):
         self._resources.clear()
 
     def run_tests(self):
+        
         methods = dir(self)
         test_methods = [method for method in methods if method.startswith("test_")]
         results = []
@@ -50,6 +61,7 @@ class SheepyTestCase(AssertMethods):
 
     @classmethod
     def _output_results(cls, results):
+        
         print("\nTest Results:")
         for test_name, result in results:
             if result == 'pass':
@@ -64,6 +76,7 @@ class SheepyTestCase(AssertMethods):
 
     @staticmethod
     def skip(reason=""):
+        
         def decorator(func):
             func._skip = True
             func._skip_reason = reason
@@ -72,5 +85,6 @@ class SheepyTestCase(AssertMethods):
 
     @staticmethod
     def expectedFailure(func):
+        
         func._expected_failure = True
         return func
