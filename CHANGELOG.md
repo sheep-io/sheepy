@@ -2,19 +2,15 @@
 
 Sheepy is a lightweight unit testing framework designed for Python developers who value simplicity and ease of use. It provides a core set of components to write unit tests and generate basic test reports.
 
-### Initial relase 
+### v0.0.4 09/24/2024
 
-### Features 
+### Added
 
-* **Test decoration**: Using the @sheepy decorator to mark functions as test cases.
-* **Test discovery**: Automatically finding test cases within a specified class.
-* **Test runner**: Executing test cases and collecting results.
-* **Basic reporting**: Generating a simple pass/fail report.
-* **Logging**: Providing a mechanism for logging test execution details.
+* Added full support for API testing in the Sheepy test framework.
+* Implemented `ApiRequests` module for handling HTTP requests (GET, POST, PUT, DELETE) in API tests.
+* Introduced new assert methods: `assertStatusCode`, `assertJsonResponse`, and `assertResponseContains` to validate HTTP responses.
+* Provided built-in HTTP error handling via the `HttpError` exception class.
 
-### v0.0.2 09/21/2024
-
-changing the entire project structure, reorganizing and changing use cases. Improving to increasingly optimize unit tests.
 
 ### v0.0.3 09/22/2024
 
@@ -32,3 +28,19 @@ changing the entire project structure, reorganizing and changing use cases. Impr
 
 ### Fixed
 * Error Messages: Improvements in error messages for expected failures and tests.
+
+### v0.0.2 09/21/2024
+
+changing the entire project structure, reorganizing and changing use cases. Improving to increasingly optimize unit tests.
+
+
+### Initial relase 
+
+### Features 
+
+* **Test decoration**: Using the @sheepy decorator to mark functions as test cases.
+* **Test discovery**: Automatically finding test cases within a specified class.
+* **Test runner**: Executing test cases and collecting results.
+* **Basic reporting**: Generating a simple pass/fail report.
+* **Logging**: Providing a mechanism for logging test execution details.
+
